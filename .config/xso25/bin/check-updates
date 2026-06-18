@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Simple update checker for Waybar
+updates=$(checkupdates 2>/dev/null | wc -l)
+aur_updates=$(paru -Qum 2>/dev/null | wc -l)
+total=$((updates + aur_updates))
+
+if [ "$total" -gt 0 ]; then
+    printf '{"text": "%s", "alt": "%s", "tooltip": "Click to update", "class": "%s"}' "$total" "$total" "yellow"
+else
+    printf '{"text": "0", "alt": "0", "tooltip": "System up to date", "class": "green"}'
+fi

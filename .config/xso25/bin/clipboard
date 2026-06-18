@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Clipboard manager — browse cliphist entries via rofi
+source "$(dirname "$0")/../settings.sh"
+case "${1:-}" in
+    d) cliphist list | rofi -dmenu -p "delete" | cliphist delete ;;
+    w) cliphist wipe ;;
+    *) cliphist list | rofi -dmenu -p "clipboard" | cliphist decode | wl-copy ;;
+esac

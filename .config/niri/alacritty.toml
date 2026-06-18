@@ -1,0 +1,69 @@
+# Alacritty — Catppuccin Mocha
+# Inspired by ML4W kitty config, adapted for Niri xso25
+
+[env]
+TERM = "alacritty"
+
+[window]
+padding.x = 12
+padding.y = 12
+opacity = 0.64
+decorations = "none"
+dynamic_title = true
+blur=true
+
+[scrolling]
+history = 2000
+
+[font]
+size = 11.5
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Medium"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[colors.normal]
+black   = "#45475a"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#f5c2e7"
+cyan    = "#94e2d5"
+white   = "#bac2de"
+
+[colors.bright]
+black   = "#585b70"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#cba6f7"
+cyan    = "#94e2d5"
+white   = "#a6adc8"
+
+[colors.selection]
+text = "#1e1e2e"
+
+[colors.cursor]
+text = "#1e1e2e"
+cursor = "#f5c2e7"

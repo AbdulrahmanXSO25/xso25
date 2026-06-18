@@ -1,0 +1,55 @@
+# Swaylock Configuration
+# Replaces hyprlock for Niri session
+# Colors from ML4W Material You dark theme
+
+# Background color (#111418 = $surface)
+color=111418
+
+# Inside color (idle = $surface_container_low)
+inside-color=191c20
+
+# Ring color (idle = $primary)
+ring-color=a3c9fe
+
+# Line color (separator)
+line-color=111418
+
+# Key highlight color
+key-hl-color=a3c9fe
+
+# Caps lock color (using $error)
+caps-lock-key-hl-color=ffb4ab
+
+# Backspace color (using $error)
+bs-hl-color=ffb4ab
+
+# Separator color
+separator-color=111418
+
+# Text color
+text-color=e1e2e8
+text-clear-color=e1e2e8
+text-caps-lock-color=ffb4ab
+
+# Indicator
+indicator-idle-visible
+indider-radius=30
+indicator-thickness=10
+
+# Font
+font=Fira Sans Semi-Bold
+
+# Screenshots disabled
+disable-caps-lock-text
+
+# Fade
+fade-in-duration=200
+
+# Clock
+clock
+
+# Scaling
+scaling=fill
+
+# Effect
+effect-blur=7x3

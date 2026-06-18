@@ -1,0 +1,82 @@
+/* Catppuccin Mocha — Rofi 2.0 */
+* {
+    background-color:           #1e1e2e;
+    text-color:                 #cdd6f4;
+    border-color:               #45475a;
+    background-color-alt:       #313244;
+    selected-background:        #cba6f7;
+    selected-text-color:        #1e1e2e;
+    spacing:                    4;
+    padding:                    12;
+}
+
+window {
+    border-color:               @border-color;
+    border-radius:              16;
+    border:                     2;
+    padding:                    12;
+    width:                      600;
+    location:                   center;
+    anchor:                     center;
+}
+
+mainbox {
+    children:                   [inputbar, listview];
+    spacing:                    8;
+}
+
+inputbar {
+    background-color:           @background-color-alt;
+    border-radius:              10;
+    padding:                    8 16;
+    spacing:                    8;
+    children:                   [prompt, entry];
+}
+
+prompt {
+    text-color:                 #cba6f7;
+    font:                       "JetBrainsMono Nerd Font 14";
+    padding:                    0 8 0 0;
+}
+
+entry {
+    placeholder-color:          #585b70;
+    placeholder:                "Search…";
+    font:                       "JetBrainsMono Nerd Font 14";
+    text-color:                 @text-color;
+}
+
+listview {
+    spacing:                    4;
+    padding:                    4;
+    lines:                      12;
+}
+
+element {
+    padding:                    8 12;
+    spacing:                    8;
+    border-radius:              8;
+}
+
+element normal {
+    background-color:           transparent;
+}
+
+element-text {
+    text-color:                 @text-color;
+    font:                       "JetBrainsMono Nerd Font 13";
+    padding:                    0 4;
+}
+
+element selected {
+    background-color:           @selected-background;
+}
+
+element selected element-text {
+    text-color:                 @selected-text-color;
+}
+
+element-icon {
+    size:                       24;
+    padding:                    0 8 0 0;
+}

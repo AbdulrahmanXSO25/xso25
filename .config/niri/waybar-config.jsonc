@@ -1,0 +1,328 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": [
+    "niri/window",
+    "custom/separator#dot-line",
+    "custom/launcher",
+    "custom/separator#dot-line",
+    "niri/workspaces",
+    "custom/separator#dot-line",
+    "custom/update"
+  ],
+  "modules-center": [
+    "custom/swaync",
+    "custom/separator#dot-line",
+    "group/clock-group",
+    "custom/separator#dot-line",
+    "group/util-toggle-group"
+  ],
+  "modules-right": [
+    "group/mpris-group",
+    "custom/separator#dot-line",
+    "tray",
+    "custom/separator#dot-line",
+    "group/audio",
+    "group/backlight-group",
+    "group/battery-group",
+    "custom/separator#dot-line",
+    "custom/power-menu"
+  ],
+  "niri/workspaces": {
+    "format": "{value}",
+    "on-click": "activate",
+    "all-outputs": false,
+    "disable-scroll": false,
+    "active-only": false,
+    "display-condition": "only-populated",
+    "min-length": 10
+  },
+  "niri/window": {
+    "format": "{title}",
+    "min-length": 5,
+    "max-length": 30,
+    "rewrite": {
+      "": "<span foreground='#8aadf4'> </span> Niri",
+      "Alacritty": "  Terminal",
+      "foot": "  Foot",
+      "foot": "  Terminal",
+      "com.mitchellh.ghostty": "  Ghostty",
+      "(.*) — Mozilla Firefox": "<span foreground='#ed8796'>󰈹 </span> Firefox",
+      "(.*)Mozilla Firefox": "<span foreground='#ed8796'>󰈹 </span> Firefox",
+      "(.*) - Visual Studio Code": "<span foreground='#8aadf4'>󰨞  </span> $1",
+      "(.*)Visual Studio Code": "<span foreground='#8aadf4'>󰨞  </span> Code",
+      "google-chrome": "<span foreground='#f5a97f'>  </span> Chrome",
+      "chromium": "<span foreground='#f5a97f'>  </span> Chromium",
+      "firefox": "<span foreground='#ed8796'>󰈹 </span> Firefox",
+      "thunar": "<span foreground='#8aadf4'>󰉋  </span> Thunar",
+      "org.telegram.desktop": "<span foreground='#24A1DE'>  </span> Telegram",
+      "vesktop": "<span foreground='#8aadf4'>  </span> Discord",
+      "obsidian": "<span foreground='#5b4965'>󱞁  </span> Obsidian",
+      "mpv": "<span foreground='#c6a0f6'>  </span> mpv",
+      "vlc": "<span foreground='#f5a97f'>󰕼  </span> VLC",
+      "com.github.th_ch.youtube_music": "<span foreground='#FF0000'>  </span> YT Music",
+      "zen": "<span foreground='#f5a97f'>󰺕  </span> Zen"
+    }
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "power-profiles-daemon": {
+    "format": "{icon} ",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+  "clock#time": {
+    "format": "  {:%H:%M}",
+    "interval": 60,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#f5e0dc'><b>{}</b></span>",
+        "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+        "today": "<span color='#f38ba8'><b>{}</b></span>"
+      }
+    }
+  },
+  "clock#date": {
+    "format": "   {:%a %d %b}",
+    "interval": 60,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#f5e0dc'><b>{}</b></span>",
+        "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+        "today": "<span color='#f38ba8'><b>{}</b></span>"
+      }
+    }
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "  {usage}%",
+    "tooltip": false
+  },
+  "memory": {
+    "states": {
+      "warning": 75,
+      "critical": 90
+    },
+    "format": "  {used:0.1f}G",
+    "format-critical": "󰀦 {percentage}%",
+    "tooltip-format": "Memory: {used:0.1f}G / {total:0.1f}G",
+    "interval": 5
+  },
+  "backlight#icon": {
+    "format": "{icon}",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "tooltip": true,
+    "tooltip-format": "{percent}%",
+    "on-scroll-up": "brightnessctl -q s +5%",
+    "on-scroll-down": "brightnessctl -q s 5%-"
+  },
+  "backlight#text": {
+    "format": "{percent}%",
+    "tooltip": true,
+    "tooltip-format": "{percent}%",
+    "on-scroll-up": "brightnessctl -q s +5%",
+    "on-scroll-down": "brightnessctl -q s 5%-"
+  },
+  "network": {
+    "format-wifi": "{icon}",
+    "format-ethernet": " ",
+    "format-disconnected": "睊",
+    "tooltip-format": "{essid}",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "婢",
+    "format-icons": {
+      "default": ["", "", "󰕾"]
+    },
+    "on-click-middle": "pavucontrol",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
+    "tooltip": true,
+    "tooltip-format": "{volume}%"
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source} | {source_volume}%",
+    "format-source": "",
+    "format-source-muted": "󰍭",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 2%-",
+    "tooltip-format": "{source_desc} | {source_volume}%"
+  },
+  "battery#icon": {
+    "bat": "BAT0",
+    "adapter": "ADP0",
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "max-length": 20,
+    "format": "{icon} ",
+    "format-warning": "{icon} ",
+    "format-critical": "{icon} ",
+    "format-charging": " ",
+    "format-plugged": "ﮣ",
+    "tooltip": true,
+    "tooltip-format": "{capacity}%",
+    "format-alt": "{icon} {time}",
+    "format-full": "ﮣ",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "battery#text": {
+    "bat": "BAT0",
+    "adapter": "ADP0",
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "max-length": 20,
+    "format": "{capacity}%",
+    "format-warning": "{capacity}%",
+    "format-critical": "{capacity}%",
+    "format-charging": "{capacity}%",
+    "format-plugged": "Plugged",
+    "tooltip": true,
+    "tooltip-format": "{capacity}%",
+    "format-full": "Full",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "mpris": {
+    "format": "{player_icon} {title}",
+    "format-paused": "  {title}",
+    "artist-len": 15,
+    "title-len": 25,
+    "player-icons": {
+      "default": " ",
+      "mpv": "🎵",
+      "spotify": " ",
+      "firefox": " ",
+      "chromium": " "
+    },
+    "status-icons": {
+      "paused": " ",
+      "playing": "",
+      "stopped": ""
+    }
+  },
+  "custom/power-menu": {
+    "format": " ⏻ ",
+    "on-click": "wlogout"
+  },
+  "custom/launcher": {
+    "format": "",
+    "on-click": "/home/abdulrahmanxso25/.config/xso25/bin/launcher"
+  },
+  "custom/separator#dot-line": {
+    "format": "",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/update": {
+    "exec": "/home/abdulrahmanxso25/.config/xso25/bin/check-updates",
+    "return-type": "json",
+    "format": "{}",
+    "interval": 1800,
+    "on-click": "alacritty -e paru -Syu",
+    "min-length": 3
+  },
+  "custom/swaync": {
+    "tooltip": true,
+    "tooltip-format": "Left: Notification Center\nRight: Do not Disturb",
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='#f38ba8'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='#f38ba8'><sup></sup></span>",
+      "dnd-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "sleep 0.1 && swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "idle_inhibitor": {
+    "tooltip": true,
+    "tooltip-format-activated": "Idle inhibitor active",
+    "tooltip-format-deactivated": "Idle inhibitor inactive",
+    "format": "{icon}",
+    "format-icons": {
+      "activated": " ",
+      "deactivated": " "
+    }
+  },
+  "group/audio": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "pulseaudio",
+      "transition-left-to-right": true
+    },
+    "modules": ["pulseaudio", "pulseaudio#microphone"]
+  },
+  "group/mpris-group": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "mpris",
+      "transition-left-to-right": true
+    },
+    "modules": ["mpris"]
+  },
+  "group/backlight-group": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "backlight#icon",
+      "transition-left-to-right": true
+    },
+    "modules": ["backlight#icon", "backlight#text"]
+  },
+  "group/battery-group": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "battery#icon",
+      "transition-left-to-right": true
+    },
+    "modules": ["battery#icon", "battery#text"]
+  },
+  "group/clock-group": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "clock#time",
+      "transition-left-to-right": true
+    },
+    "modules": ["clock#time", "clock#date"]
+  },
+  "group/util-toggle-group": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "idle_inhibitor",
+      "transition-left-to-right": true
+    },
+    "modules": ["idle_inhibitor", "power-profiles-daemon"]
+  }
+}
