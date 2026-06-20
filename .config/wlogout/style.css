@@ -1,0 +1,41 @@
+/* Wlogout — Catppuccin Mocha */
+* {
+  background-image: none;
+  font-family: "JetBrainsMono Nerd Font", "Fira Sans Semi-Bold";
+  font-size: 18px;
+}
+
+window {
+  background-color: rgba(30, 30, 46, 0.85);
+}
+
+button {
+  background-color: #313244;
+  color: #cdd6f4;
+  border: 2px solid #45475a;
+  border-radius: 16px;
+  margin: 8px;
+  padding: 24px 48px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background-color: #45475a;
+  border-color: #cba6f7;
+  box-shadow: 0 4px 20px rgba(203, 166, 247, 0.3);
+}
+
+#lock { border-color: #89b4fa; }
+#lock:hover { background-color: #89b4fa; color: #1e1e2e; border-color: #89b4fa; }
+
+#logout { border-color: #a6e3a1; }
+#logout:hover { background-color: #a6e3a1; color: #1e1e2e; border-color: #a6e3a1; }
+
+#suspend { border-color: #f9e2af; }
+#suspend:hover { background-color: #f9e2af; color: #1e1e2e; border-color: #f9e2af; }
+
+#shutdown { border-color: #f38ba8; }
+#shutdown:hover { background-color: #f38ba8; color: #1e1e2e; border-color: #f38ba8; }
+
+#reboot { border-color: #cba6f7; }
+#reboot:hover { background-color: #cba6f7; color: #1e1e2e; border-color: #cba6f7; }

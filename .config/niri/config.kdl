@@ -459,7 +459,7 @@ binds {
     Mod+V            { spawn-sh "~/.config/xso25/bin/clipboard"; }
 
     // ── System Actions ──
-    Mod+Escape            { spawn-sh "wlogout -L 600 -R 600 -b 6 -c $HOME/.config/niri/wlogout-style.css"; }
+    Mod+Escape            { spawn-sh "wlogout -L 600 -R 600 -b 5"; }
     Mod+Shift+E           { quit skip-confirmation=false; }
     Mod+Ctrl+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
@@ -495,7 +495,7 @@ binds {
 spawn-at-startup "xwayland-satellite"
 
 // Waybar — Catppuccin Mocha rice with Niri modules
-spawn-at-startup "waybar" "-c" "/home/abdulrahmanxso25/.config/niri/waybar-config.jsonc" "-s" "/home/abdulrahmanxso25/.config/niri/waybar-style.css"
+spawn-at-startup "waybar" "-c" "\$HOME/.config/niri/waybar-config.jsonc" "-s" "\$HOME/.config/niri/waybar-style.css"
 
 // Notification daemon
 spawn-at-startup "swaync"

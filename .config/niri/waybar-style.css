@@ -67,6 +67,21 @@ window#waybar.hidden {
   border: 1px solid rgba(69, 71, 90, 0.3);
 }
 
+/* ── Language Indicator ── */
+#language,
+#niri-language {
+  background: rgba(203, 166, 247, 0.15);
+  color: @surface;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  margin: 6px 2px;
+  border-radius: 6px;
+  border: 1px solid rgba(203, 166, 247, 0.2);
+  min-width: 28px;
+}
+
 /* ── Left Section ── */
 #window {
   background: @surface;
@@ -148,7 +163,7 @@ window#waybar.hidden {
 
 /* ── Clock (Bright, visible) ── */
 #clock-time {
-  color: #ffffff;
+  color: #cfd6ff;
   font-weight: 700;
   letter-spacing: 0.5px;
   background: @surface;

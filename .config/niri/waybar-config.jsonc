@@ -22,6 +22,8 @@
     "custom/separator#dot-line",
     "tray",
     "custom/separator#dot-line",
+    "niri/language",
+    "custom/separator#dot-line",
     "group/audio",
     "group/backlight-group",
     "group/battery-group",
@@ -63,6 +65,12 @@
       "com.github.th_ch.youtube_music": "<span foreground='#FF0000'>  </span> YT Music",
       "zen": "<span foreground='#f5a97f'>󰺕  </span> Zen"
     }
+  },
+  "niri/language": {
+    "format": "{short}",
+    "format-ua": "UA",
+    "tooltip": true,
+    "tooltip-format": "Language: {}"
   },
   "tray": {
     "spacing": 10
@@ -150,8 +158,8 @@
     "format-icons": {
       "default": ["", "", "󰕾"]
     },
-    "on-click-middle": "pavucontrol",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click": "pavucontrol",
+    "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
     "tooltip": true,
@@ -210,12 +218,13 @@
     "format-paused": "  {title}",
     "artist-len": 15,
     "title-len": 25,
+    "player-len": 1,
+    "player-status-order": ["playing", "paused"],
+    "ignored-players": ["firefox", "chromium", "google-chrome"],
     "player-icons": {
       "default": " ",
       "mpv": "🎵",
-      "spotify": " ",
-      "firefox": " ",
-      "chromium": " "
+      "spotify": " "
     },
     "status-icons": {
       "paused": " ",
@@ -225,11 +234,11 @@
   },
   "custom/power-menu": {
     "format": " ⏻ ",
-    "on-click": "wlogout"
+    "on-click": "wlogout -b 5"
   },
   "custom/launcher": {
     "format": "",
-    "on-click": "/home/abdulrahmanxso25/.config/xso25/bin/launcher"
+    "on-click": "$HOME/.config/xso25/bin/launcher"
   },
   "custom/separator#dot-line": {
     "format": "",
@@ -237,7 +246,7 @@
     "tooltip": false
   },
   "custom/update": {
-    "exec": "/home/abdulrahmanxso25/.config/xso25/bin/check-updates",
+    "exec": "$HOME/.config/xso25/bin/check-updates",
     "return-type": "json",
     "format": "{}",
     "interval": 1800,

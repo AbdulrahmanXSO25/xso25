@@ -32,7 +32,6 @@ button:hover {
   background-color: #45475a;
   border-color: #cba6f7;
   box-shadow: 0 4px 20px rgba(203, 166, 247, 0.3);
-  transform: scale(1.05);
 }
 
 /* Lock */
