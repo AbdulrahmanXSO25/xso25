@@ -1,0 +1,95 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Wlogout — Catppuccin Mocha
+   ═══════════════════════════════════════════════════════════════════════ */
+
+* {
+  background-image: none;
+  font-family: "JetBrainsMono Nerd Font", "Fira Sans Semi-Bold";
+  font-size: 16px;
+}
+
+window {
+  background-color: rgba(30, 30, 46, 0.85);
+}
+
+button {
+  background-color: #313244;
+  color: #cdd6f4;
+  border: 2px solid #45475a;
+  border-radius: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25%;
+  margin: 10px;
+  padding: 20px 40px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:focus,
+button:active,
+button:hover {
+  background-color: #45475a;
+  border-color: #cba6f7;
+  box-shadow: 0 4px 20px rgba(203, 166, 247, 0.3);
+}
+
+/* Lock */
+#lock {
+  background-color: #313244;
+  border-color: #89b4fa;
+}
+#lock:hover {
+  background-color: #89b4fa;
+  color: #1e1e2e;
+}
+
+/* Logout */
+#logout {
+  background-color: #313244;
+  border-color: #a6e3a1;
+}
+#logout:hover {
+  background-color: #a6e3a1;
+  color: #1e1e2e;
+}
+
+/* Suspend */
+#suspend {
+  background-color: #313244;
+  border-color: #f9e2af;
+}
+#suspend:hover {
+  background-color: #f9e2af;
+  color: #1e1e2e;
+}
+
+/* Hibernate */
+#hibernate {
+  background-color: #313244;
+  border-color: #fab387;
+}
+#hibernate:hover {
+  background-color: #fab387;
+  color: #1e1e2e;
+}
+
+/* Shutdown */
+#shutdown {
+  background-color: #313244;
+  border-color: #f38ba8;
+}
+#shutdown:hover {
+  background-color: #f38ba8;
+  color: #1e1e2e;
+}
+
+/* Reboot */
+#reboot {
+  background-color: #313244;
+  border-color: #cba6f7;
+}
+#reboot:hover {
+  background-color: #cba6f7;
+  color: #1e1e2e;
+}

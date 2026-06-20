@@ -1,0 +1,388 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Waybar — Catppuccin Mocha Glass (Professional Edition)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@define-color bg #1e1e2e;
+@define-color bg-alt #181825;
+@define-color surface #313244;
+@define-color surface-light #45475a;
+@define-color overlay #585b70;
+@define-color text #cdd6f4;
+@define-color subtext #a6adc8;
+@define-color mauve #cba6f7;
+@define-color blue #89b4fa;
+@define-color green #a6e3a1;
+@define-color yellow #f9e2af;
+@define-color peach #fab387;
+@define-color maroon #eba0ac;
+@define-color red #f38ba8;
+@define-color teal #94e2d5;
+@define-color sky #89dceb;
+@define-color pink #f5c2e7;
+@define-color flamingo #f2cdcd;
+@define-color rosewater #f5e0dc;
+
+* {
+  font-family:
+    "Fira Sans Semi-Bold",
+    "JetBrainsMono Nerd Font",
+    "Iosevka Nerd Font",
+    sans-serif;
+  font-size: 13.5px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @text;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.1;
+}
+
+/* ── All Modules Container (Neutral by default) ── */
+#window,
+#temperature, #cpu, #memory,
+#custom-update,
+#custom-swaync, #custom-media,
+#tray, #mode, #custom-lock,
+#custom-power-menu, #custom-launcher,
+#custom-spotify, #custom-weather,
+#backlight, #network,
+#pulseaudio, #pulseaudio-microphone,
+#custom-separator,
+#clock-time, #clock-date,
+#battery-icon, #battery-text,
+#idle_inhibitor, #power-profiles-daemon,
+#custom-privacy {
+  background: rgba(10, 10, 16, 0.65);
+  color: @text;
+  border-radius: 10px;
+  padding: 2px 12px;
+  margin: 6px 3px;
+  font-size: 13.5px;
+  border: 1px solid rgba(69, 71, 90, 0.3);
+}
+
+/* ── Language Indicator ── */
+#language,
+#niri-language {
+  background: rgba(203, 166, 247, 0.15);
+  color: @surface;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  margin: 6px 2px;
+  border-radius: 6px;
+  border: 1px solid rgba(203, 166, 247, 0.2);
+  min-width: 28px;
+}
+
+/* ── Left Section ── */
+#window {
+  background: @surface;
+  color: @subtext;
+  font-weight: 500;
+  min-width: 220px;
+  padding: 2px 16px;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+/* ── Workspace Capsule ── */
+#workspaces {
+    background: #313244;
+    border-radius: 999px;
+    padding: 4px 6px;
+    margin: 6px 6px;
+}
+
+#workspaces button {
+    color: #a6adc8;
+    border: none;
+    border-radius: 999px;
+    min-width: 28px;
+    min-height: 26px;
+    margin: 0 1px;
+    padding: 0 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#workspaces button:hover {
+    background: #45475a;
+    color: #cdd6f4;
+}
+
+#workspaces button.active,
+#workspaces button.focused,
+#workspaces button.current {
+    background: #cba6f7;
+    color: #1e1e2e;
+    font-weight: 800;
+}
+
+#workspaces button.empty {
+    color: #585b70;
+}
+
+/* ── System Monitor ── */
+#temperature, #cpu, #memory {
+  padding: 2px 10px;
+  font-weight: 500;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+  color: @subtext;
+}
+
+#cpu {
+  border-radius: 10px 0 0 10px;
+  margin-right: 0;
+  padding-right: 6px;
+  border-right: none;
+}
+
+#temperature {
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-left: none;
+  border-right: none;
+}
+
+#memory {
+  border-radius: 0 10px 10px 0;
+  margin-left: 0;
+  padding-left: 6px;
+  border-left: none;
+}
+
+/* ── Clock (Bright, visible) ── */
+#clock-time {
+  color: #cfd6ff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+  padding: 2px 14px;
+}
+
+#clock-date {
+  color: #cdd6f4;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+/* ── Audio (Blue accent) ── */
+#pulseaudio {
+  color: @blue;
+  padding: 2px 12px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#pulseaudio.muted { color: @red; }
+
+#pulseaudio-microphone {
+  color: @teal;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+/* ── Network (Green accent) ── */
+#network {
+  color: @green;
+  padding: 2px 14px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+  font-size: 15px;
+}
+
+#network.disconnected { color: @red; }
+
+/* ── Backlight ── */
+#backlight {
+  color: @subtext;
+  padding: 2px 12px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+/* ── Battery (Neutral, only color on alerts) ── */
+#battery-icon {
+  color: @subtext;
+  padding: 2px 10px;
+  border-radius: 10px 0 0 10px;
+  margin-right: 0;
+  padding-right: 4px;
+  border-right: none;
+  font-size: 15px;
+}
+
+#battery-text {
+  color: @subtext;
+  padding: 2px 10px;
+  border-radius: 0 10px 10px 0;
+  margin-left: 0;
+  padding-left: 4px;
+  border-left: none;
+}
+
+#battery.warning #battery-icon { color: @yellow; }
+#battery.warning #battery-text { color: @yellow; }
+#battery.critical #battery-icon { color: @red; }
+#battery.critical #battery-text { color: @red; }
+#battery.charging #battery-icon { color: @green; }
+
+/* ── Tray ── */
+#tray {
+  background: @surface;
+  padding: 2px 10px;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @red;
+}
+
+/* ── Custom Modules ── */
+#custom-launcher {
+  color: @mauve;
+  font-size: 18px;
+  padding: 2px 16px;
+  margin-left: 8px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#custom-powermenu {
+  color: @red;
+  font-size: 16px;
+  margin-right: 8px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#custom-swaync {
+  color: @blue;
+  padding: 2px 14px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#custom-update {
+  color: @green;
+  padding: 2px 10px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#custom-separator {
+  color: @surface-light;
+  font-size: 14px;
+  padding: 0 2px;
+  background: transparent;
+  border: none;
+  margin: 6px 0;
+}
+
+/* ── Idle & Power Profiles ── */
+#idle_inhibitor {
+  color: @peach;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+#idle_inhibitor.activated {
+  color: @green;
+}
+
+#power-profiles-daemon {
+  color: @flamingo;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+/* ── MPRIS ── */
+#mpris {
+  background: @surface;
+  border-radius: 10px;
+  padding: 2px 14px;
+  margin: 6px 3px;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+  color: @peach;
+}
+
+/* ── Groups ── */
+#group-mpris-group,
+#group-clock-group,
+#group-util-toggle-group,
+#group-audio,
+#group-backlight-group,
+#group-battery-group {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Tooltip ── */
+tooltip {
+  background: @bg;
+  border: 1px solid @surface-light;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+tooltip label {
+  color: @text;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12px;
+}
+
+/* ── Animations ── */
+@keyframes blink {
+  to {
+    background-color: rgba(30, 34, 42, 0.5);
+    color: @text;
+  }
+}
+
+/* ── Custom Weather ── */
+#custom-weather {
+  color: @sky;
+  padding: 2px 12px;
+  background: @surface;
+  border: 1px solid rgba(69, 71, 90, 0.4);
+}
+
+/* ── All hover effects ── */
+#window:hover,
+#temperature:hover, #cpu:hover, #memory:hover,
+#custom-update:hover,
+#custom-swaync:hover,
+#tray:hover,
+#custom-power-menu:hover,
+#custom-launcher:hover,
+#backlight:hover,
+#network:hover,
+#pulseaudio:hover,
+#pulseaudio-microphone:hover,
+#battery-icon:hover,
+#battery-text:hover,
+#clock-time:hover,
+#clock-date:hover,
+#custom-weather:hover {
+  background: #45475a;
+  transition: all 0.2s ease;
+}
