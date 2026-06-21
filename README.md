@@ -48,7 +48,7 @@ Coming from GNOME? See [docs/MIGRATE-FROM-GNOME.md](docs/MIGRATE-FROM-GNOME.md).
 # ~/.config/xso25/settings.sh
 export TERMINAL="alacritty"
 export BROWSER="firefox"
-export FILE_MANAGER="nautilus --new-window"
+export FILE_MANAGER="thunar"
 ```
 
 ## Layout
