@@ -9,11 +9,13 @@ set -e
 # shellcheck source=/dev/null
 [ -f ~/.config/niri/env.sh ] && . ~/.config/niri/env.sh
 
-# ── Set Wallpaper (clear, terminal blur is handled by compositor) ──
-WALLPAPER="$HOME/Downloads/my-bg.jpg"
-if [ ! -f "$WALLPAPER" ]; then
-    WALLPAPER=$(find "$HOME/Pictures/Wallpapers" -type f \( -name '*.jpg' -o -name '*.png' \) 2>/dev/null | shuf -n 1)
-fi
+# ── Set Wallpaper ──
+# Uses default wallpaper from repo (copied by installer) or any in Pictures/Wallpapers
+WALLPAPER=""
+for dir in "$HOME/Pictures/Wallpapers" "$HOME/.config/niri/assets/wallpapers"; do
+    WALLPAPER=$(find "$dir" -maxdepth 1 -type f \( -name '*.jpg' -o -name '*.png' \) 2>/dev/null | head -1)
+    [ -n "$WALLPAPER" ] && break
+done
 if [ -n "$WALLPAPER" ] && command -v swaybg &>/dev/null; then
     killall swaybg 2>/dev/null || true
     swaybg -i "$WALLPAPER" -m fill &>/dev/null &
