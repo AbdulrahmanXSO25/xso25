@@ -491,14 +491,14 @@ binds {
 }
 
 // ─── Autostart ─────────────────────────────────────────────────────────
-// XWayland satellite (required for X11 apps)
-spawn-at-startup "xwayland-satellite"
+// XWayland satellite (required for X11 apps — only on Arch, not available on Fedora)
+// Fedora users: comment out the line below, or install xwayland-satellite manually
+// spawn-at-startup "xwayland-satellite"
 
 // Waybar — Catppuccin Mocha rice with Niri modules
-spawn-at-startup "waybar" "-c" "\$HOME/.config/niri/waybar-config.jsonc" "-s" "\$HOME/.config/niri/waybar-style.css"
+spawn-sh-at-startup "waybar -c $HOME/.config/niri/waybar-config.jsonc -s $HOME/.config/niri/waybar-style.css"
 
-// Notification daemon
-spawn-at-startup "swaync"
+// Notification daemon (moved to startup.sh to avoid systemd service conflict on Fedora)
 
 // Polkit authentication agent
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"

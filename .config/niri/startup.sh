@@ -23,6 +23,11 @@ if command -v wl-paste &>/dev/null && command -v cliphist &>/dev/null; then
     wl-paste --watch cliphist store 2>/dev/null &
 fi
 
+# ── Notification Daemon (start only if not already running) ──
+if ! pgrep -x swaync &>/dev/null; then
+    swaync &>/dev/null &
+fi
+
 # ── Polkit Authentication Agent ──
 if ! pgrep -x polkit-gnome-au >/dev/null; then
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
@@ -37,14 +42,15 @@ if command -v swayidle &>/dev/null && command -v swaylock &>/dev/null; then
         before-sleep 'swaylock -f -c 111418' &
 fi
 
+# ── Bluetooth ──
+rfkill unblock bluetooth 2>/dev/null || true
+if command -v blueman-applet &>/dev/null; then
+    blueman-applet 2>/dev/null &
+fi
+
 # ── Nm-applet (NetworkManager applet) ──
 if command -v nm-applet &>/dev/null; then
     nm-applet --indicator 2>/dev/null &
-fi
-
-# ── Blueman Applet (Bluetooth tray) ──
-if command -v blueman-applet &>/dev/null; then
-    blueman-applet 2>/dev/null &
 fi
 
 # ── Set cursor theme for XWayland ──

@@ -10,6 +10,11 @@ A Catppuccin Mocha rice for the [Niri](https://github.com/YaLTeR/niri) Wayland c
 bash <(curl -s https://raw.githubusercontent.com/AbdulrahmanXSO25/xso25/main/install.sh)
 ```
 
+Using Fish shell? Run:
+```fish
+bash (curl -s https://raw.githubusercontent.com/AbdulrahmanXSO25/xso25/main/install.sh | psub)
+```
+
 Works on Arch Linux and Fedora 40+. The installer detects your GPU, installs drivers, sets up SDDM, and applies the configs. More details in [docs/INSTALL.md](docs/INSTALL.md).
 
 Fedora users see [docs/FEDORA.md](docs/FEDORA.md).  
@@ -69,3 +74,7 @@ export FILE_MANAGER="thunar"
 ## License
 
 MIT.
+
+## Credits
+
+- Youssef Mahmoud ([Soofa2](https://github.com/Soofa2)) — Fedora testing, debugging, and system reports that made xso25 work on Fedora.

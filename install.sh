@@ -101,12 +101,17 @@ elif [ "$DISTRO" = "fedora" ]; then
         BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA mesa-vulkan-drivers intel-media-driver"
     fi
     if echo "$GPU" | grep -q "nvidia"; then
-        BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA akmod-nvidia xorg-x11-drv-nvidia-cuda"
-        echo -e "${YELLOW}  → NVIDIA detected: akmod-nvidia will be installed.${NC}"
+        if rpm -qa 2>/dev/null | grep -q "kmod-nvidia"; then
+            echo -e "${GREEN}  → NVIDIA driver already installed, skipping.${NC}"
+        else
+            BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA akmod-nvidia xorg-x11-drv-nvidia-cuda"
+            echo -e "${YELLOW}  → NVIDIA detected: akmod-nvidia will be installed.${NC}"
+        fi
     fi
 
     # Wayland infra
-    BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA wayland libinput mesa-dri-drivers"
+    # wayland is pre-installed on Fedora, no separate package
+    BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA libinput mesa-dri-drivers"
 
     # Audio
     BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA pipewire pipewire-pulseaudio wireplumber"
@@ -120,7 +125,17 @@ elif [ "$DISTRO" = "fedora" ]; then
     # Portal
     BASE_PACKAGES_FEDORA="$BASE_PACKAGES_FEDORA xdg-desktop-portal xdg-desktop-portal-gtk"
 
-    sudo dnf install -y $BASE_PACKAGES_FEDORA
+    echo -e "${YELLOW}  → Installing base packages (SDDM, audio, network)...${NC}"
+    sudo dnf install -y --skip-broken --skip-unavailable $BASE_PACKAGES_FEDORA || \
+        echo -e "${YELLOW}  ⚠ Some base packages skipped (already installed or unavailable)${NC}"
+
+    # Enable Niri COPR (niri is not in official Fedora repos)
+    echo -e "${YELLOW}  → Enabling Niri COPR repository...${NC}"
+    if sudo dnf copr enable -y alebastr/niri; then
+        echo -e "${GREEN}  → Niri COPR enabled${NC}"
+    else
+        echo -e "${RED}  ⚠ Failed to enable Niri COPR. Try manually: sudo dnf copr enable alebastr/niri${NC}"
+    fi
 fi
 
 echo -e "${GREEN}  ✅ Base system installed${NC}"
@@ -157,32 +172,57 @@ if [ "$DISTRO" = "arch" ]; then
     fi
 
 elif [ "$DISTRO" = "fedora" ]; then
-    # Try official repo first, fall back to COPR
-    if ! dnf info niri &>/dev/null; then
-        sudo dnf copr enable -y alebastr/niri 2>/dev/null || true
-    fi
-
-    sudo dnf install -y \
+    echo -e "${YELLOW}  → Downloading and installing Niri + tools (internet required, may take 5-10 minutes)...${NC}"
+    sudo dnf install -y --skip-broken --skip-unavailable \
         niri waybar alacritty foot \
         SwayNotificationCenter wlogout \
         rofi-wayland \
         swaylock swayidle swaybg \
         wl-clipboard brightnessctl playerctl \
-        polkit-gnome ImageMagick \
+        lxpolkit ImageMagick \
         jetbrains-mono-fonts fira-code-fonts \
-        fontawesome-fonts google-noto-emoji-fonts \
-        qalculate-gtk
+        fontawesome-6-free-fonts fontawesome-fonts-all \
+        google-noto-emoji-fonts \
+        qalculate-gtk thunar \
+        blueman network-manager-applet pavucontrol qt6ct || \
+    echo -e "${YELLOW}  → Retrying without optional packages...${NC}" && \
+    sudo dnf install -y --skip-broken --skip-unavailable \
+        niri waybar alacritty foot \
+        SwayNotificationCenter wlogout \
+        rofi-wayland \
+        swaylock swayidle swaybg \
+        wl-clipboard brightnessctl playerctl \
+        lxpolkit ImageMagick \
+        jetbrains-mono-fonts fira-code-fonts || true
 
-    # Build cliphist for Fedora
+    # Verify and retry any missing critical packages individually
+    echo -e "${YELLOW}  → Verifying installed packages...${NC}"
+    for pkg in swaync wlogout rofi waybar alacritty; do
+        if ! command -v "$pkg" &>/dev/null; then
+            # Map binary name to Fedora package name
+            case "$pkg" in
+                swaync) pkg_name="SwayNotificationCenter" ;;
+                rofi) pkg_name="rofi-wayland" ;;
+                *) pkg_name="$pkg" ;;
+            esac
+            echo -e "${YELLOW}  → Installing missing: $pkg_name...${NC}"
+            sudo dnf install -y "$pkg_name" || echo -e "${RED}  ⚠ Failed to install $pkg_name${NC}"
+        fi
+    done
+
+    # Build cliphist for Fedora (not in official repos)
     if ! command -v cliphist &>/dev/null; then
         echo -e "${YELLOW}  → Building cliphist from source...${NC}"
-        if command -v go &>/dev/null; then
-            go install go.senan.xyz/cliphist@latest
-            sudo cp ~/go/bin/cliphist /usr/local/bin/ 2>/dev/null || true
-        else
+        if ! command -v go &>/dev/null; then
             sudo dnf install -y golang
-            go install go.senan.xyz/cliphist@latest
-            sudo cp ~/go/bin/cliphist /usr/local/bin/ 2>/dev/null || true
+        fi
+        export GOPATH="$HOME/go"
+        PATH="$GOPATH/bin:$PATH"
+        go install go.senan.xyz/cliphist@latest 2>/dev/null || true
+        if [ -f "$GOPATH/bin/cliphist" ]; then
+            sudo cp "$GOPATH/bin/cliphist" /usr/local/bin/
+        else
+            echo -e "${YELLOW}  ⚠ cliphist build failed. Install manually: go install go.senan.xyz/cliphist@latest${NC}"
         fi
     fi
 fi
@@ -195,11 +235,22 @@ echo -e "${GREEN}  ✅ Niri + tools installed${NC}"
 
 echo -e "${YELLOW}[3/5] Enabling system services...${NC}"
 
-# Enable SDDM
-if systemctl list-unit-files sddm.service &>/dev/null; then
-    sudo systemctl enable sddm 2>/dev/null || true
-    echo -e "${GREEN}  → SDDM enabled${NC}"
-fi
+# Detect and enable display manager (pick the first one found)
+DM_ENABLED=""
+for dm in gdm sddm lightdm lxdm; do
+    if systemctl list-unit-files "${dm}.service" &>/dev/null; then
+        sudo systemctl enable "${dm}" 2>/dev/null || true
+        echo -e "${GREEN}  → ${dm} enabled${NC}"
+        DM_ENABLED="$dm"
+        break
+    fi
+done
+# Disable any other display managers to avoid conflicts
+for dm in gdm sddm lightdm lxdm; do
+    if [ "$dm" != "$DM_ENABLED" ] && systemctl list-unit-files "${dm}.service" &>/dev/null; then
+        sudo systemctl disable "${dm}" 2>/dev/null || true
+    fi
+done
 
 # Enable NetworkManager
 if systemctl list-unit-files NetworkManager.service &>/dev/null; then
@@ -217,12 +268,6 @@ fi
 if command -v systemctl --user &>/dev/null; then
     systemctl --user enable wireplumber 2>/dev/null || true
     echo -e "${GREEN}  → WirePlumber enabled${NC}"
-fi
-
-# Disable GDM if present (conflicts with SDDM)
-if systemctl list-unit-files gdm.service &>/dev/null; then
-    echo -e "${YELLOW}  → GDM detected — disabling in favor of SDDM${NC}"
-    sudo systemctl disable gdm 2>/dev/null || true
 fi
 
 echo -e "${GREEN}  ✅ Services configured${NC}"
@@ -265,6 +310,15 @@ cp "$SCRIPT_DIR/.config/niri/alacritty.toml" "$HOME/.config/alacritty/" 2>/dev/n
 # Permissions
 chmod +x "$HOME/.config/xso25/bin/"* 2>/dev/null || true
 chmod +x "$HOME/.config/niri/startup.sh" 2>/dev/null || true
+
+# Fix Thunar/Nautilus D-Bus FileManager1 conflict
+NAUTILUS_DBUS="/usr/share/dbus-1/services/org.freedesktop.FileManager1.service"
+if [ -f "$NAUTILUS_DBUS" ] && grep -q "nautilus" "$NAUTILUS_DBUS" 2>/dev/null; then
+    if [ ! -f "${NAUTILUS_DBUS}.disabled" ]; then
+        sudo mv "$NAUTILUS_DBUS" "${NAUTILUS_DBUS}.disabled" 2>/dev/null || true
+        echo -e "${GREEN}  → Disabled Nautilus FileManager1 D-Bus (prevents Thunar conflict)${NC}"
+    fi
+fi
 
 # Fedora: fix update checker and waybar update command
 if [ "$DISTRO" = "fedora" ]; then
@@ -338,11 +392,11 @@ if [ "$TTY_MODE" = true ]; then
 else
     echo "  1. Log out of your current session"
 fi
-echo "  2. At SDDM login, select 'Niri'"
+DM_NAME="${DM_ENABLED:-your display manager}"
+echo "  2. At the $DM_NAME login screen, select 'Niri' from the session menu"
 echo "  3. Log in and enjoy xso25"
 echo ""
-echo "  From TTY (no display manager):"
-echo "    niri-session"
+echo "  From TTY (no display manager): niri-session"
 echo ""
 echo "  ─────────────────────────────────────────────"
 echo "  Docs:"

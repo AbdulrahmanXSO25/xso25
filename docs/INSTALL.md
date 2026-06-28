@@ -14,6 +14,8 @@ For people sitting at a terminal with no desktop yet.
 bash <(curl -s https://raw.githubusercontent.com/AbdulrahmanXSO25/xso25/main/install.sh)
 ```
 
+On Fish shell: `bash (curl -s https://raw.githubusercontent.com/AbdulrahmanXSO25/xso25/main/install.sh | psub)`
+
 The installer does this:
 
 1. Detects your distro and GPU

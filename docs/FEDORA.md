@@ -1,44 +1,43 @@
 # xso25 on Fedora
 
-The installer works on Fedora 40+. Package names differ from Arch, so here's what you need to know.
-
-## Quick way
-
-Run the same command:
+The installer works on Fedora 40+. It handles package name differences automatically.
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/AbdulrahmanXSO25/xso25/main/install.sh)
 ```
 
-The installer handles Fedora differences automatically — correct package names, cliphist build, SELinux, and the right update command for dnf.
+## What the installer does differently on Fedora
 
-## Package names
+- Uses `SwayNotificationCenter` instead of `swaync`
+- Uses `rofi-wayland` instead of `rofi`
+- Uses `lxpolkit` instead of `polkit-gnome`
+- Uses `fontawesome-6-free-fonts` + `fontawesome-fonts-all` instead of `otf-font-awesome`
+- Builds `cliphist` from source (not in Fedora repos)
+- Patches the waybar update button to use `sudo dnf upgrade`
+- Doesn't install `xwayland-satellite` (not available on Fedora)
+
+## Package equivalents
 
 | Arch | Fedora |
 |------|--------|
 | `swaync` | `SwayNotificationCenter` |
 | `rofi` | `rofi-wayland` |
+| `polkit-gnome` | `lxpolkit` |
+| `otf-font-awesome` | `fontawesome-6-free-fonts` + `fontawesome-fonts-all` |
 | `imagemagick` | `ImageMagick` |
 | `ttf-jetbrains-mono-nerd` | `jetbrains-mono-fonts` |
 | `ttf-firacode-nerd` | `fira-code-fonts` |
-| `otf-font-awesome` | `fontawesome-fonts` |
 | `noto-fonts-emoji` | `google-noto-emoji-fonts` |
-| `cliphist` | *(build from source)* |
+| `cliphist` | *(built from source)* |
 
-Everything else (`niri`, `waybar`, `alacritty`, `wlogout`, `swaylock`, etc.) is the same name.
+Everything else (`niri`, `waybar`, `alacritty`, `foot`, `wlogout`, `swaylock`, etc.) is the same name.
 
-## SELinux
+## After install
 
-If something acts weird, SELinux might be blocking it. Check for denials:
+Reboot and select **Niri** from the SDDM session menu.
 
-```bash
-sudo ausearch -m avc -ts recent
-```
+## Known Fedora differences
 
-If you see `mmap` denials:
-
-```bash
-sudo setsebool -P domain_can_mmap_files 1
-```
-
-Only poke at SELinux if something is actually broken.
+- **Battery adapter** may be `AC` instead of `ADP0`. If battery doesn't show in waybar, edit `~/.config/niri/waybar-config.jsonc` and change `"adapter": "ADP0"` to `"adapter": "AC"`.
+- **Power profiles** module in waybar may not work due to package conflicts. If errors appear, remove `"power-profiles-daemon"` from the right-side modules in `waybar-config.jsonc`.
+- **SELinux**: if things act weird, run `sudo ausearch -m avc -ts recent` to check for denials. If `mmap` denials appear: `sudo setsebool -P domain_can_mmap_files 1`.
